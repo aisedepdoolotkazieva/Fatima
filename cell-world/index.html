@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="ky">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CELL WORLD — Клетканын сырдуу дүйнөсү</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  </head>
+  <body>
+    <!-- Навигация -->
+    <header class="navbar">
+      <div class="logo">CELL <span>WORLD</span></div>
+      <nav class="nav-links" id="navLinks">
+        <button class="nav-btn active" onclick="showSection('hero')">
+          Башкы бет
+        </button>
+        <button class="nav-btn" onclick="showSection('intro')">
+          Клетка деген эмне?
+        </button>
+        <button class="nav-btn" onclick="showSection('animal-cell')">
+          Жаныбар клеткасы (3D)
+        </button>
+        <button class="nav-btn" onclick="showSection('plant-cell')">
+          Өсүмдүк клеткасы
+        </button>
+        <button class="nav-btn" onclick="showSection('compare')">
+          Салыштыруу
+        </button>
+        <button class="nav-btn" onclick="showSection('human-cells')">
+          Адам клеткалары
+        </button>
+        <button class="nav-btn" onclick="showSection('eye-cells')">
+          Көздүн клеткалары
+        </button>
+        <button class="nav-btn" onclick="showSection('hair-lashes')">
+          Кирпик жана чач
+        </button>
+        <button class="nav-btn" onclick="showSection('facts')">
+          Кызыктуу фактылар
+        </button>
+        <button class="nav-btn" onclick="showSection('quiz')">Викторина</button>
+        <button class="nav-btn" onclick="showSection('game')">Оюн</button>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn" id="soundToggle" title="Үн эффекттери">
+          🔊
+        </button>
+        <button class="icon-btn" id="fullscreenToggle" title="Толук экран">
+          ⛶
+        </button>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+      </div>
+    </header>
+
+    <!-- Негизги Контент Бөлүмдөрү -->
+    <main>
+      <!-- БАШКЫ БЕТ -->
+      <section id="hero" class="section active">
+        <div class="hero-content">
+          <h1>CELL WORLD</h1>
+          <h2>«Көзгө көрүнбөгөн дүйнөгө саякат»</h2>
+          <p>
+            Клетка — тирүү организмдердин түзүлүшүнүн жана иштешинин негизги
+            бирдиги.
+          </p>
+          <div class="hero-buttons">
+            <button class="btn primary" onclick="showSection('intro')">
+              Саякатты баштоо
+            </button>
+            <button class="btn secondary" onclick="showSection('animal-cell')">
+              Клетканы изилдөө
+            </button>
+            <button class="btn accent" onclick="showSection('quiz')">
+              Билимиңди текшерүү
+            </button>
+          </div>
+        </div>
+        <div id="heroCanvasContainer" class="canvas-container"></div>
+      </section>
+
+      <!-- 1-БӨЛҮМ: КЛЕТКА ДЕГЕН ЭМНЕ? -->
+      <section id="intro" class="section">
+        <div class="container">
+          <h2>1. Клетка деген эмне?</h2>
+          <p class="section-desc">
+            Клетка — бардык тирүү организмдердин курулуш материалы.
+          </p>
+          <div class="info-grid">
+            <div
+              class="card"
+              onclick="
+                openModal(
+                  'Клетка түшүнүгү',
+                  'Клетка — тирүү организмдердин негизги түзүлүштүк жана функционалдык бирдиги. Алар азыктануу, энергия алуу жана башка жашоо процесстерине катышат.',
+                )
+              "
+            >
+              <h3>Негизги бирдик</h3>
+              <p>Клеткалар азыктануу жана энергия алуу процесстерин аткарат.</p>
+            </div>
+            <div
+              class="card"
+              onclick="
+                openModal(
+                  'Өсүмдүк клеткасы',
+                  'Өсүмдүк клеткалары катуу дубалга жана хлоропласттарга ээ болот, алар фотосинтез жүргүзөт.',
+                )
+              "
+            >
+              <h3>Өсүмдүк клеткасы</h3>
+              <p>Катуу сырткы дубалга жана жашыл пигменттерге ээ.</p>
+            </div>
+            <div
+              class="card"
+              onclick="
+                openModal(
+                  'Бир клеткалуулар',
+                  'Бактериялар жана жөнөкөйлөр бир эле клеткадан туруп, бардык тиричилик функцияларын аткара алышат.',
+                )
+              "
+            >
+              <h3>Бир клеткалуулар</h3>
+              <p>Кээ бир организмдер жалгыз клеткадан турат.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2-БӨЛҮМ: ЖАНЫБАР КЛЕТКАСЫНЫН 3D ДҮЙНӨСҮ -->
+      <section id="animal-cell" class="section">
+        <div class="container-split">
+          <div class="sidebar-panel">
+            <h2>2. Жаныбар клеткасынын органоиддери</h2>
+            <p class="hint">Органоидди тандап, анын кызматын билип алыңыз:</p>
+            <div class="organelle-list" id="organelleList">
+              <button class="org-btn" data-org="membrane">
+                Клетка мембранасы
+              </button>
+              <button class="org-btn" data-org="cytoplasm">Цитоплазма</button>
+              <button class="org-btn" data-org="nucleus">Ядро</button>
+              <button class="org-btn" data-org="mitochondria">
+                Митохондрия
+              </button>
+              <button class="org-btn" data-org="ribosome">Рибосомалар</button>
+              <button class="org-btn" data-org="er">Эндоплазмалык тор</button>
+              <button class="org-btn" data-org="golgi">Гольджи аппараты</button>
+              <button class="org-btn" data-org="lysosome">Лизосомалар</button>
+            </div>
+          </div>
+          <div class="viewer-panel">
+            <div id="threeCellContainer"></div>
+            <div class="org-info-card" id="orgInfoCard">
+              <h3 id="orgTitle">Органоидди тандаңыз</h3>
+              <p id="orgDesc">
+                Клетканын ичиндеги бөлүктөрдү изилдөө үчүн сол жактагы тизмеден
+                басыңыз.
+              </p>
+              <p class="comparison" id="orgComp"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3-БӨЛҮМ: ӨСҮМДҮК КЛЕТКАСЫ -->
+      <section id="plant-cell" class="section">
+        <div class="container">
+          <h2>3. Өсүмдүк клеткасы</h2>
+          <div class="plant-grid">
+            <div class="plant-info">
+              <div
+                class="card"
+                onclick="
+                  openModal(
+                    'Клетка дубалы',
+                    'Клетка дубалы клеткага бекемдик жана форма берет, өсүмдүккө тірек болот.',
+                  )
+                "
+              >
+                <h3>🌿 Клетка дубалы</h3>
+                <p>
+                  Өсүмдүк клеткасына кошумча бекемдик жана туруктуу форма берет.
+                </p>
+              </div>
+              <div
+                class="card"
+                onclick="
+                  openModal(
+                    'Хлоропласттар',
+                    'Хлоропласттарда фотосинтез жүрөт, алар күн нурунан энергия өндүрөт.',
+                  )
+                "
+              >
+                <h3>☀️ Хлоропласттар</h3>
+                <p>Күн нурунун жардамы менен фотосинтез процессин жүргүзөт.</p>
+              </div>
+              <div
+                class="card"
+                onclick="
+                  openModal(
+                    'Борбордук вакуоль',
+                    'Клетканын ширесин камтыйт жана ички басымды жөнгө салат.',
+                  )
+                "
+              >
+                <h3>💧 Борбордук вакуоль</h3>
+                <p>
+                  Сууну жана керектүү заттарды сактап, ички басымды кармап
+                  турат.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4-БӨЛҮМ: САЛЫШТЫРУУ -->
+      <section id="compare" class="section">
+        <div class="container">
+          <h2>4. Жаныбар жана өсүмдүк клеткасынын айырмасы</h2>
+          <div class="table-container">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Органоид / Белги</th>
+                  <th>Жаныбар клеткасы</th>
+                  <th>Өсүмдүк клеткасы</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Клетка дубалы</td>
+                  <td>❌ Жок</td>
+                  <td>✅ Бар (целлюлозадан турат)</td>
+                </tr>
+                <tr>
+                  <td>Хлоропласттар</td>
+                  <td>❌ Жок</td>
+                  <td>✅ Бар (фотосинтез үчүн)</td>
+                </tr>
+                <tr>
+                  <td>Вакуоль</td>
+                  <td>Кичинекей, убактылуу</td>
+                  <td>Чоң борбордук вакуоль</td>
+                </tr>
+                <tr>
+                  <td>Формасы</td>
+                  <td>Ар түрдүү, жумшак</td>
+                  <td>Туруктуу, бурчтуу</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5-БӨЛҮМ: АДАМДЫН КЛЕТКАЛАРЫ -->
+      <section id="human-cells" class="section">
+        <div class="container">
+          <h2>5. Адамдын клеткаларынын түрлөрү</h2>
+          <div class="info-grid">
+            <div
+              class="card"
+              onclick="
+                openModal(
+                  'Эритроцит',
+                  'Кандын кызыл клеткасы. Жетилген эритроциттерде ядро болбойт, алар өпкөдөн кычкылтекти бардык органдарга ташыйт.',
+                )
+              "
+            >
+              <h3>🔴 Эритроцит</h3>
+              <p>Кычкылтекти ташуучу кан клеткасы (ядросу жок).</p>
+            </div>
+            <div
+              class="card"
+              onclick="
+                openModal(
+                  'Нейрон',
+                  'Нерв клеткасы. Маалыматты электрдик жана химиялык сигналдар аркылуу өткөрөт.',
+                )
+              "
+            >
+              <h3>⚡ Нейрон</h3>
+              <p>Маалыматты өткөрүүчү нерв системасынын клеткасы.</p>
+            </div>
+            <div
+              class="card"
+              onclick="
+                openModal(
+                  'Булчуң клеткасы',
+                  'Жыйрылууга жана дененин кыймылына түздөн-түз катышат.',
+                )
+              "
+            >
+              <h3>💪 Булчуң клеткасы</h3>
+              <p>Жыйрылуу жөндөмүнө ээ клеткалар.</p>
+            </div>
+            <div
+              class="card"
+              onclick="
+                openModal(
+                  'Эпителий',
+                  'Дененин сыртын жана ички органдардын беттерин каптайт.',
+                )
+              "
+            >
+              <h3>🛡️ Эпителий клеткасы</h3>
+              <p>Коргоо кызматын аткаруучу каптоочу ткандар.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6-БӨЛҮМ: КӨЗДҮН КЛЕТКАЛАРЫ -->
+      <section id="eye-cells" class="section">
+        <div class="container">
+          <h2>6. Көздүн фоторецептор клеткалары</h2>
+          <div class="info-grid">
+            <div
+              class="card"
+              onclick="
+                openModal(
+                  'Таякчалар',
+                  'Күңүрт жарыкта, караңгыда көрүүгө жардам берген сезгич клеткалар.',
+                )
+              "
+            >
+              <h3>🕯️ Таякчалар</h3>
+              <p>Караңгыда жана күңүрт жарыкта көрүүнү камсыз кылат.</p>
+            </div>
+            <div
+              class="card"
+              onclick="
+                openModal(
+                  'Колбочкалар',
+                  'Түстөрдү жана күндүзгү майда деталдарды так айырмалоого катышат.',
+                )
+              "
+            >
+              <h3>🎨 Колбочкалар</h3>
+              <p>Түстөрдү жана так деталдарды айырмалайт.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7-БӨЛҮМ: КИРПИК ЖАНА ЧАЧ -->
+      <section id="hair-lashes" class="section">
+        <div class="container">
+          <h2>7. Кирпик жана чач клеткалары</h2>
+          <div class="card full-width">
+            <h3>Кирпик клеткабы?</h3>
+            <p>
+              Кирпик — өз алдынча клетка эмес, ал теринин фолликулынан өсүп
+              чыккан түк. Анын көрүнүп турган бөлүгү кератинден турган
+              <strong>өлүк клеткалардан</strong> турат. Бирок анын түбүндөгү
+              фолликул тирүү клеткалардан курулуп, өсүүнү камсыз кылат.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8-БӨЛҮМ: КЫЗЫКТУУ ФАКТЫЛАР -->
+      <section id="facts" class="section">
+        <div class="container">
+          <h2>8. Денебиздеги клеткалардын кызыктуу дүйнөсү</h2>
+          <div class="facts-grid">
+            <div class="fact-card">
+              🧬 Митохондриялардын өзүнүн жеке ДНКсы бар.
+            </div>
+            <div class="fact-card">
+              🔴 Жетилген адамдын эритроциттеринде ядро болбойт.
+            </div>
+            <div class="fact-card">
+              ⚡ Нейрондордун узун өсүндүлөрү метрге чейин жетиши мүмкүн.
+            </div>
+            <div class="fact-card">
+              🌿 Өсүмдүк клеткаларында хлоропласттар күн нурун энергияга
+              айландырат.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9-БӨЛҮМ: ВИКТОРИНА -->
+      <section id="quiz" class="section">
+        <div class="container">
+          <h2>9. Интерактивдүү викторина</h2>
+          <div id="quizContainer" class="quiz-box">
+            <div id="questionText" class="question">Суроо жүктөлүүдө...</div>
+            <div id="optionsContainer" class="options-grid"></div>
+            <button
+              id="nextBtn"
+              class="btn primary"
+              style="display: none"
+              onclick="nextQuestion()"
+            >
+              Кийинки суроо
+            </button>
+          </div>
+          <div id="quizResult" class="quiz-result" style="display: none"></div>
+        </div>
+      </section>
+
+      <!-- 10-БӨЛҮМ: ОЮН -->
+      <section id="game" class="section">
+        <div class="container">
+          <h2>10. Органоиддерди табуу оюну</h2>
+          <p class="section-desc">
+            Туура органоидди же түзүлүштү тандап, упай топтоңуз!
+          </p>
+          <div id="gameBox" class="game-box">
+            <h3 id="gameTask">Тапшырма: Митохондрияны тап!</h3>
+            <div id="gameChoices" class="options-grid"></div>
+            <p id="gameScore">Упай: 0</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Модалдык терезе -->
+    <div id="infoModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h3 id="modalTitle">Маалымат</h3>
+        <p id="modalText">Түшүндүрмө...</p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
